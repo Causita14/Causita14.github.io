@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adrian Gutierrez-Lopez | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #00e5ff;
+      --accent2: #7b61ff;
+      --text: #e8e8f0;
+      --muted: #6b6b85;
+      --card: #13131c;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(123,97,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.6s;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.8s;
+    }
+
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.75rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 3rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+      line-height: 1.2;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 0 auto;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+    }
+
+    .about-text p strong { color: var(--text); font-weight: 500; }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--accent); }
+
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* EXPERIENCE */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      padding-top: 0.25rem;
+      line-height: 1.6;
+    }
+
+    .timeline-content h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-content .role {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-content ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .timeline-content ul li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .timeline-content ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent2);
+      transform: translateY(-3px);
+    }
+
+    .skill-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .skill-level {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* EDUCATION */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: border-color 0.2s;
+    }
+
+    .edu-card:hover { border-color: var(--accent2); }
+
+    .edu-school {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-degree {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .edu-dates {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* PROJECTS */
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .project-card:hover { border-color: var(--accent); }
+
+    .project-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent2);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .project-card ul li {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .project-card ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent2);
+      font-size: 0.8rem;
+    }
+
+    /* CONTACT */
+    .contact-inner {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-inner p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2.5rem 3rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">AGL</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="hero-tag">// Portfolio</p>
+      <h1>Adrian<br><span>Gutierrez-Lopez</span></h1>
+      <p class="hero-sub">Computer Science student at UCF with a passion for cybersecurity, embedded systems, and building things that actually work.</p>
+      <div class="hero-links">
+        <a href="#about" class="btn btn-primary">About Me</a>
+        <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">// 01</p>
+    <h2 class="section-title">About Me</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a <strong>Computer Science student at the University of Central Florida</strong>, working toward a B.S. with a long-term goal of specializing in cybersecurity and privacy. I transferred from Valencia College after completing my A.A., and I'm driven by a genuine curiosity for how systems work — and how they break.
+        </p>
+        <p>
+          My background spans <strong>retail leadership, high-volume logistics, and theme park operations</strong> — environments that demanded adaptability, clear communication, and accountability under pressure. Those experiences shaped how I approach technical problems: methodically, with an eye on the bigger picture.
+        </p>
+        <p>
+          Outside of coursework, I build personal projects with <strong>Arduino and embedded hardware</strong>, explore programming in Python and HTML/CSS, and stay sharp through self-directed learning. I speak both <strong>English and Spanish fluently</strong>, which has been an asset in every professional environment I've worked in.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <p class="stat-label">Current Degree</p>
+          <p class="stat-value">B.S. Computer Science — UCF</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Career Focus</p>
+          <p class="stat-value">Cybersecurity & Privacy</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Languages</p>
+          <p class="stat-value">English · Spanish (Both Fluent)</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Location</p>
+          <p class="stat-value">Orlando, FL</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">// 02</p>
+    <h2 class="section-title">Experience</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-date">Feb 2026 – Present<br>Orlando, FL</div>
+        <div class="timeline-content">
+          <h3>Amazon</h3>
+          <p class="role">Delivery Driver</p>
+          <ul>
+            <li>Manage daily routes of 100+ packages while maintaining accuracy and time efficiency</li>
+            <li>Adapt to changing route conditions and resolve delivery issues independently</li>
+            <li>Maintain consistent performance metrics in a high-volume, fast-paced environment</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Apr 2023 – Feb 2026<br>Orlando, FL</div>
+        <div class="timeline-content">
+          <h3>Universal's Islands of Adventure</h3>
+          <p class="role">Ride Operator</p>
+          <ul>
+            <li>Enforced safety procedures and protocols while running high-traffic attractions</li>
+            <li>Communicated clearly with guests and team members to ensure smooth daily operations</li>
+            <li>Handled opening and closing procedures with attention to detail and consistency</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">May 2022 – Apr 2023<br>Orlando, FL</div>
+        <div class="timeline-content">
+          <h3>Underground by Journeys</h3>
+          <p class="role">Sales Lead</p>
+          <ul>
+            <li>Led sales floor operations and guided customers toward purchasing decisions</li>
+            <li>Supervised daily store tasks including opening, closing, and loss prevention</li>
+            <li>Collaborated with team to consistently meet and exceed weekly sales goals</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">// 03</p>
+    <h2 class="section-title">Education</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <p class="edu-degree">B.S. · Computer Science</p>
+        <h3 class="edu-school">University of Central Florida</h3>
+        <p class="edu-dates">Spring 2026 – Expected Spring 2029 · Orlando, FL</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-degree">A.A. · General Studies</p>
+        <h3 class="edu-school">Valencia College</h3>
+        <p class="edu-dates">Fall 2022 – Fall 2025 · Orlando, FL</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">// 04</p>
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">🐍</div>
+        <p class="skill-name">Python</p>
+        <p class="skill-level">Beginner</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <p class="skill-name">HTML / CSS</p>
+        <p class="skill-level">Beginner</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <p class="skill-name">Microsoft Office Suite</p>
+        <p class="skill-level">Intermediate</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔌</div>
+        <p class="skill-name">Arduino / Embedded Systems</p>
+        <p class="skill-level">Hobbyist</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🗣️</div>
+        <p class="skill-name">English</p>
+        <p class="skill-level">Fluent</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🗣️</div>
+        <p class="skill-name">Spanish</p>
+        <p class="skill-level">Fluent</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">// 05</p>
+    <h2 class="section-title">Projects</h2>
+    <div class="project-card">
+      <p class="project-tag">Personal Project · 2024 – Present</p>
+      <h3>Arduino Embedded Systems</h3>
+      <p>Interactive sound and hardware projects built from scratch using a Kuman UNO microcontroller — bridging software logic and physical components.</p>
+      <ul>
+        <li>Designed and built interactive sound projects using a passive buzzer and potentiometers</li>
+        <li>Troubleshot hardware and software issues independently to achieve desired outputs</li>
+        <li>Applied programming logic to control components through iterative testing and debugging</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">// 06</p>
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-inner">
+      <p>Whether you have a question, an opportunity, or just want to connect — my inbox is open.</p>
+      <div class="contact-links">
+        <a href="mailto:a.g.lopez1410@gmail.com" class="btn btn-primary">Email Me</a>
+        <a href="tel:4074584252" class="btn btn-ghost">407-458-4252</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Adrian Gutierrez-Lopez · Orlando, FL</p>
+  </footer>
+
+  <script>
+    // Scroll-triggered animations
+    const items = document.querySelectorAll('.timeline-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 120);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    items.forEach(item => observer.observe(item));
+  </script>
+
+</body>
+</html>
